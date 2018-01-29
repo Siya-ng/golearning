@@ -1,0 +1,72 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Go Learning</title>
+  </head>
+  <body>
+    <h1>{{.Title}}</h1>
+    <div class="">
+      <textarea class="inputText" name="name" rows="8" cols="80" placeholder="Enter your text"></textarea>
+      <br>
+      <button class="submitBtn" type="button" name="button">Submit</button>
+    </div>
+
+    <div class="result">
+      <table class = "resultList">
+      </table>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      const $inputText = $(".inputText")
+      const $submitBtn = $(".submitBtn")
+      const $result = $(".result")
+      const $resultList = $(".resultList")
+      function countWord(text) {
+        var textArray = text.toLowerCase().split(" ")
+        var wordCounts = {}
+        textArray.forEach(function(word){
+          if (wordCounts[word]) {
+            wordCounts[word] += 1
+          } else {
+            wordCounts[word] = 1
+          }
+        })
+        let wordCountSorted = Object.keys(wordCounts).sort(function(a,b){
+          return wordCounts[b]- wordCounts[a]
+        })
+        for (var i = 0; i < 10; i++) {
+          var $newListItem = $("<tr>")
+          var $wordTitleRow = $("<td>")
+          var $wordRank = $(`<td>${i + 1}</td>`)
+          var $wordTitle = wordCountSorted[i] || "nil"
+          $wordTitleRow.text($wordTitle)
+          if (wordCountSorted[i]){
+            var $noOfCount = $(`<td>${wordCounts[wordCountSorted[i]]}</td>`)
+          } else {
+            var $noOfCount = $("<td>0</td>")
+          }
+          $newListItem.append($wordRank)
+          $newListItem.append($wordTitleRow)
+          $newListItem.append($noOfCount)
+          $resultList.append($newListItem)
+        }
+      }
+
+      $submitBtn.on("click", function(){
+        $resultList.empty()
+        var $newListTitle = $("<tr>")
+        $newListTitle.append($("<th>Rank</th><th>Word</th><th>Number of time</th>"))
+        $resultList.append($newListTitle)
+        countWord($inputText.val())
+        $inputText.val("")
+      })
+    })
+    </script>
+    <!-- <script src="index.js"></script> -->
+  </body>
+</html>
