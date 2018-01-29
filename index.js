@@ -16,22 +16,20 @@ $(function(){
       return wordCounts[b]- wordCounts[a]
     })
     let topTenWord = []
-    var $resultList = $("<ol>")
+    var $resultOrderedList = $("<ol>")
     for (var i = 0; i < 10; i++) {
       var $newListItem = $("<li>")
       $newListItem.text(`${wordCountSorted[i]} : ${wordCounts[wordCountSorted[i]]} `)
-
-      // $newListItem.val() = `${wordCountSorted[i]} : ${wordCounts[wordCountSorted[i]]} `
-      $resultList.append($newListItem)
+      resultOrderedList.append($newListItem)
     }
-    $result.append($resultList)
-
-
+    $result.append(resultOrderedList)
   }
 
   $submitBtn.on("click", function(){
+    $result.empty()
     countWord($inputText.val())
     $inputText.val("")
+
   })
 
 
